@@ -132,11 +132,4 @@ npm run verify-rag
 - Answers include source citations (year and file) when available
 - The system will explicitly state if information is not found in the letters
 
-## License
-
-ISC
-
-## Contributing
-
-Contributions are welcome! Please feel free to submit a Pull Request.
 
