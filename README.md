@@ -24,6 +24,8 @@ A Retrieval-Augmented Generation (RAG) system that allows you to query Warren Bu
 - PostgreSQL database with pgvector extension
 - OpenAI API key
 
+> 📖 **For detailed setup instructions**, see [SETUP_GUIDE.md](./SETUP_GUIDE.md) - Complete pre-requisites checklist for Pazago Drive participants
+
 ## Setup
 
 1. **Clone the repository**
@@ -82,6 +84,37 @@ Example questions:
 - "How does Berkshire benefit from retained earnings?"
 - "What does he say about long-term investing?"
 
+### Using the REST API
+
+You can also access the RAG system via REST API endpoints, allowing others to test your application without pulling the GitHub repo.
+
+1. **Start the API server**
+   ```bash
+   npm run api
+   ```
+   
+   The server will run on `http://localhost:3000`
+
+2. **Test the API**
+   
+   ```bash
+   # Health check
+   curl http://localhost:3000/api/health
+   
+   # Ask a question
+   curl -X POST http://localhost:3000/api/query \
+     -H "Content-Type: application/json" \
+     -d '{"question": "What is Warren Buffett\'s investment philosophy?", "limit": 5}'
+   ```
+
+3. **API Documentation**
+   
+   See [API.md](./API.md) for complete API documentation including:
+   - All available endpoints
+   - Request/response formats
+   - Example usage in multiple languages
+   - RAG verification details
+
 ### Verify RAG Pipeline
 
 To verify that answers are coming from your database (not OpenAI's training data):
@@ -94,6 +127,8 @@ npm run verify-rag
 
 ```
 ├── src/
+│   ├── api/
+│   │   └── server.ts                 # Express API server
 │   ├── mastra/
 │   │   ├── agents/
 │   │   │   └── berkshire-agent.ts    # Main RAG agent
@@ -107,12 +142,15 @@ npm run verify-rag
 │   └── README.md
 ├── package.json
 ├── tsconfig.json
-└── README.md
+├── README.md
+└── API.md                            # REST API documentation
 ```
 
 ## Scripts
 
-- `npm run dev` - Start Mastra development server
+- `npm run dev` - Start Mastra development server (port 4111)
+- `npm run api` - Start REST API server (port 3000)
+- `npm run api:watch` - Start API server with auto-reload
 - `npm run build` - Build the project
 - `npm run start` - Start production server
 - `npm run ingest` - Ingest PDF documents into database
@@ -131,6 +169,12 @@ npm run verify-rag
 - The agent is configured to **strictly use only information from the retrieved chunks**
 - Answers include source citations (year and file) when available
 - The system will explicitly state if information is not found in the letters
+
+## Documentation
+
+- **[SETUP_GUIDE.md](./SETUP_GUIDE.md)** - Complete pre-requisites setup checklist for Pazago Drive participants
+- **[API.md](./API.md)** - REST API documentation and usage examples
+- **[README.md](./README.md)** - Project overview and quick start guide
 
 ## License
 
